@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: todo-pod
+  namespace: django-ns
+spec:
+  containers:
+    - name: todo-app
+      image: gmathur90/django-todo
+      ports: 
+        - containerPort: 80 

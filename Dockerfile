@@ -1,17 +1,18 @@
 # Use the official Python image as a base
-FROM python:3
+FROM python:3.9
 
 # Set the working directory
 WORKDIR /data
 
-# Install required dependencies
-RUN apt-get update && apt-get install -y python3-distutils
+# Install required dependencie
+RUN apt-get update && apt-get install -y python3-distutils build-essential
 
 # Install Django
 RUN pip install django==3.2
 
 # Copy the current directory contents into the container
 COPY . .
+
 
 # Run migrations (this step requires Django and its dependencies to be installed)
 RUN python manage.py migrate

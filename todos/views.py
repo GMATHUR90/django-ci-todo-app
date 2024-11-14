@@ -7,20 +7,24 @@ class IndexView(generic.ListView):
     template_name = 'todos/index.html'
     context_object_name = 'todo_list'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = "Todo List - Using Django"  # Set your title here
+        return context
+
     def get_queryset(self):
         """Return all the latest todos."""
         return Todo.objects.order_by('-created_at')
 
+# Rest of your view functions remain the same
 def add(request):
     title = request.POST['title']
     Todo.objects.create(title=title)
-
     return redirect('todos:index')
 
 def delete(request, todo_id):
     todo = get_object_or_404(Todo, pk=todo_id)
     todo.delete()
-
     return redirect('todos:index')
 
 def update(request, todo_id):
@@ -30,6 +34,5 @@ def update(request, todo_id):
         isCompleted = True
     
     todo.isCompleted = isCompleted
-
     todo.save()
     return redirect('todos:index')
